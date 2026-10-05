@@ -56,13 +56,14 @@ function switchVideo(collection,index){
  ++loadVersion;activeCollection=collection;activeIndex=index;seekActive=false;
  player.pause();player.removeAttribute('src');player.load();
  errorPanel.hidden=true;progress.value=0;progress.disabled=true;time.textContent='0:00 / 0:00';
- player.poster=collection.image||'';
+ const source=collection.sources?.[index]||`media/${collection.id}-${index+1}.mp4`;
+ player.poster=source.replace(/^media\//,'thumbnails/').replace(/\.mp4$/i,'.webp');
  const id=collection.videos[index];original.href=`https://drive.google.com/file/d/${id}/view?usp=drivesdk`;
  document.querySelector('#video-error-original').href=original.href;
  player.setAttribute('aria-label',`${collection.name}, video ${index+1}`);
  document.querySelectorAll('#video-tabs button').forEach((button,i)=>button.setAttribute('aria-pressed',String(i===index)));
  stage.style.setProperty('--video-ratio','9 / 16');
- player.src=collection.sources?.[index]||`media/${collection.id}-${index+1}.mp4`;setLoading();player.load();updatePlay();
+ player.src=source;setLoading();player.load();updatePlay();
  status.textContent=`Video ${index+1} selected. Tap play to watch.`;
 }
 async function togglePlay(){
