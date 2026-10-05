@@ -25,7 +25,7 @@ collections.find(c=>c.id==='wedding').image='photos/wedding-1.webp';
 collections.find(c=>c.id==='corporate').videos=['1kW4AA4t5nwECvrmFoy0ypoVUhJZF475p'];
 collections.find(c=>c.id==='government').videos=['1ctYr3CgaVs8DgPshd3wvFfXzZHuf245f'];
 collections.find(c=>c.id==='sangeet').videos.push('18KP9kT7sQYecYC9GKmPr_QrtNEOG_GxT');
-const showreel={id:'showreel',name:'A glimpse of my work',image:'sangeet-1.webp',videos:['18KP9kT7sQYecYC9GKmPr_QrtNEOG_GxT'],sources:['media/showreel-1.mp4']};
+const showreel={id:'showreel',name:'Anchor Twinkle — Showreel',image:'anchor-twinkle-showreel.webp',videos:['18KP9kT7sQYecYC9GKmPr_QrtNEOG_GxT'],sources:['anchor-twinkle-showreel.mp4']};
 const grid=document.querySelector('#collections');
 grid.innerHTML=collections.map(c=>`<article class="collection" data-category="${c.id}">${c.image?`<div class="collection-media"><img src="${c.image}" alt="Twinkle at a ${c.name} occasion" loading="lazy" width="1200" height="1200">${c.videos.length?`<span class="collection-label">${c.videos.length} VIDEOS</span><button class="round-play" data-video="${c.id}" aria-label="Watch ${c.name} videos">▶</button>`:`<span class="collection-label">${c.label}</span>`}</div>`:`<div class="collection-type ${c.id}"><span class="type-number">${c.number}</span><span>${c.label}</span></div>`}<div class="collection-body"><div class="collection-title"><h3>${c.name}</h3><span aria-hidden="true">${c.number}</span></div><p>${c.description}</p><div class="collection-links">${galleries[c.id]?`<button data-gallery="${c.id}">View photos</button>`:''}${c.videos.length?`<button data-video="${c.id}">Watch videos</button>`:''}<a href="https://drive.google.com/drive/folders/${c.folder}" target="_blank" rel="noopener noreferrer">View full collection</a><a href="#contact" data-enquire="${c.id}">Enquire for this event →</a></div></div></article>`).join('');
 document.querySelectorAll('.filter').forEach(button=>button.addEventListener('click',()=>{
@@ -58,7 +58,7 @@ function switchVideo(collection,index){
  errorPanel.hidden=true;progress.value=0;progress.disabled=true;time.textContent='0:00 / 0:00';
  const source=collection.sources?.[index]||`media/${collection.id}-${index+1}.mp4`;
  player.poster=source.replace(/^media\//,'thumbnails/').replace(/\.mp4$/i,'.webp');
- const id=collection.videos[index];original.href=`https://drive.google.com/file/d/${id}/view?usp=drivesdk`;
+ const id=collection.videos[index];original.href=collection.sources?.[index]||`https://drive.google.com/file/d/${id}/view?usp=drivesdk`;
  document.querySelector('#video-error-original').href=original.href;
  player.setAttribute('aria-label',`${collection.name}, video ${index+1}`);
  document.querySelectorAll('#video-tabs button').forEach((button,i)=>button.setAttribute('aria-pressed',String(i===index)));
